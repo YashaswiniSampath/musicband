@@ -1,0 +1,214 @@
+import java.awt.BorderLayout;
+import java.sql.*;
+import java.awt.EventQueue;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTextPane;
+import java.awt.Panel;
+import javax.swing.JMenu;
+import javax.swing.JButton;
+import javax.swing.JList;
+import java.awt.Choice;
+import javax.swing.JMenuItem;
+import java.awt.Button;
+
+public class music extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args)throws exception {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					music frame = new music();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			//	try {
+			//		Class.forName("org.mariadb.jdbc.Driver");
+			//		Connection con=DriverManager.getConnection("jdbc:mariadb://localhost:3306", "root", "root");
+		//		}
+			//	catch(ClassNotFoundException error) {
+			//		System.err.println("unable to load jdbc bridge" + error);
+			//	}
+			//	catch(SQLException error) {
+			//		System.err.println("cannto conncet to database" + error);
+			//	}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public music() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 693, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblMusicStore = new JLabel("MUSIC STORE");
+		lblMusicStore.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblMusicStore.setBounds(39, 26, 230, 51);
+		contentPane.add(lblMusicStore);
+		
+		JLabel lblBandDetails = new JLabel("band details");
+		lblBandDetails.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblBandDetails.setBounds(92, 119, 101, 26);
+		contentPane.add(lblBandDetails);
+		
+		JButton btnDisplay = new JButton("display");
+		btnDisplay.setBounds(203, 124, 85, 21);
+		contentPane.add(btnDisplay);
+		btnDisplay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{  
+					Connection con=DriverManager.getConnection( "jdbc:mariadb://localhost:3306","root","root");   
+					Statement stmt=con.createStatement();  
+					ResultSet rs=stmt.executeQuery("SELECT * from band");
+					while(rs.next()) {
+						System.out.println(rs.getString(2) + " " + rs.getString(3)+ " " +rs.getString(4) + " " + rs.getString(5) );
+					}
+			
+					stmt.close();
+					con.close();  }
+					
+				catch(Exception ex){ 
+					System.out.println(ex);
+					}  
+					
+
+			}
+		});
+		
+		JLabel lblSongDetails = new JLabel("song details");
+		lblSongDetails.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblSongDetails.setBounds(84, 155, 91, 32);
+		contentPane.add(lblSongDetails);
+		
+		JButton btnDisplay_1 = new JButton("display");
+		btnDisplay_1.setBounds(203, 163, 85, 21);
+		contentPane.add(btnDisplay_1);
+		btnDisplay_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{  
+					Connection con=DriverManager.getConnection( "jdbc:mariadb://localhost:3306","root","root");   
+					Statement stmt=con.createStatement();  
+					ResultSet rs=stmt.executeQuery("SELECT * from song");
+					while(rs.next()) {
+						System.out.println(rs.getString(2) + " " + rs.getString(4) );
+					}
+			
+					stmt.close();
+					con.close(); } 
+					
+				catch(Exception ex){ 
+					System.out.println(ex);
+					}  
+					
+
+			}
+		});
+		
+		
+		JLabel lblLivePerformance = new JLabel("live performance");
+		lblLivePerformance.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblLivePerformance.setBounds(92, 197, 129, 26);
+		contentPane.add(lblLivePerformance);
+		
+		JMenu mnChooseVenue = new JMenu(" venue");
+		mnChooseVenue.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		mnChooseVenue.setBounds(203, 194, 111, 41);
+		contentPane.add(mnChooseVenue);
+		
+		
+		JMenuItem mntmGoa = new JMenuItem("goa");
+		mnChooseVenue.add(mntmGoa);
+		mntmGoa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{  
+					Connection con=DriverManager.getConnection( "jdbc:mariadb://localhost:3306/maria2","root","root");   
+					Statement stmt=con.createStatement();  
+					ResultSet rs=stmt.executeQuery("SELECT * from live WHERE venue="goa");
+					while(rs.next()) {
+						System.out.println(rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) );
+					}
+			
+					stmt.close();
+					con.close(); } 
+					
+				catch(Exception ex){ 
+					System.out.println(ex);
+					}  
+					
+
+			}
+		});
+		
+		
+		
+		JMenuItem mntmBangalore = new JMenuItem("bangalore");
+		mnChooseVenue.add(mntmBangalore);
+		mntmBangalore.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{  
+					Connection con=DriverManager.getConnection( "jdbc:mariadb://localhost:3306/maria2","root","root");   
+					Statement stmt=con.createStatement();  
+					ResultSet rs=stmt.executeQuery("SELECT * from live WHERE venue="bangalore");
+					while(rs.next()) {
+						System.out.println(rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) );
+					}
+			
+					stmt.close();
+					con.close(); } 
+					
+				catch(Exception ex){ 
+					System.out.println(ex);
+					}  
+					
+
+			}
+		});
+		
+		JMenuItem mntmPondi = new JMenuItem("pondi");
+		mnChooseVenue.add(mntmPondi);
+		mntmPondi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{  
+					Connection con=DriverManager.getConnection( "jdbc:mariadb://localhost:3306/maria2","root","root");   
+					Statement stmt=con.createStatement();  
+					ResultSet rs=stmt.executeQuery("SELECT * from live WHERE venue="pondi");
+					while(rs.next()) {
+						System.out.println(rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) );
+					}
+			
+					stmt.close();
+					con.close(); } 
+					
+				catch(Exception ex){ 
+					System.out.println(ex);
+					}  
+					
+
+			}
+		});
+	}
+}
